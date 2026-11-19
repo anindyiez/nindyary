@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Itinerary Liburan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f6f4;--card:#fff;--ink:#17302f;--mute:#6b7f7d;--line:#e2eae7;--hero1:#17413f;--hero2:#2a6b66;--rose:#e0607e;--rose-s:#fde6ec;--gold:#f2b84b;--ok:#2f9e78;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1b1a;--card:#172625;--ink:#e8f1ef;--mute:#8da5a2;--line:#243836;--hero1:#0b2a29;--hero2:#1d524e;--rose:#ef7a96;--rose-s:#3a2229;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1b1a;--card:#172625;--ink:#e8f1ef;--mute:#8da5a2;--line:#243836;--hero1:#0b2a29;--hero2:#1d524e;--rose:#ef7a96;--rose-s:#3a2229;color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;line-height:1.45}
+body{max-width:520px;margin:0 auto;padding-bottom:96px;min-height:100vh}
+h1,h2,h3{font-family:'Bricolage Grotesque','Plus Jakarta Sans',sans-serif;margin:0;letter-spacing:-.01em}
+button,input,select,textarea{font:inherit;color:inherit}
+.hero{margin:12px 14px 0;padding:22px 20px 20px;border-radius:28px;background:linear-gradient(150deg,var(--hero1),var(--hero2));color:#fff;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-40px;top:-50px;width:170px;height:170px;border-radius:50%;background:var(--rose);opacity:.35}
+.hero small{opacity:.8;font-size:13px}
+.hero h1{font-size:30px;line-height:1.1;margin:6px 0 10px;position:relative;z-index:1}
+.chips{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1}
+.chip{background:rgba(255,255,255,.16);border-radius:99px;padding:5px 12px;font-size:13px}
+.chip.g{background:var(--gold);color:#3a2a00;font-weight:600}
+.edit{position:absolute;right:14px;bottom:14px;z-index:2;border:0;background:rgba(255,255,255,.2);color:#fff;border-radius:99px;padding:6px 13px;font-size:13px}
+.days{display:flex;gap:8px;overflow-x:auto;padding:16px 14px 6px;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.d{flex:0 0 auto;min-width:62px;text-align:center;border:1px solid var(--line);background:var(--card);border-radius:18px;padding:8px 10px;cursor:pointer}
+.d b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:19px}
+.d span{font-size:11.5px;color:var(--mute)}
+.d.on{background:var(--rose);border-color:var(--rose);color:#fff}.d.on span{color:#fff;opacity:.9}
+.sec{padding:8px 14px}
+.dh{display:flex;justify-content:space-between;align-items:baseline;padding:10px 4px 4px}
+.dh h2{font-size:19px}.dh span{color:var(--mute);font-size:13px}
+.item{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:12px 12px 12px 14px;margin:10px 0;position:relative}
+.item.done{opacity:.55}.item.done .t{text-decoration:line-through}
+.tm{flex:0 0 46px;font-weight:600;font-size:14px;padding-top:2px}
+.ic{flex:0 0 38px;height:38px;border-radius:13px;background:var(--rose-s);display:grid;place-items:center;font-size:19px}
+.bd2{flex:1;min-width:0;cursor:pointer}
+.t{font-weight:600}.pl,.nt{color:var(--mute);font-size:13px}
+.cost{display:inline-block;margin-top:5px;font-size:12.5px;background:var(--bg);border-radius:99px;padding:2px 10px}
+.lks{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.lk{font-size:12.5px;text-decoration:none;color:var(--rose);background:var(--rose-s);border-radius:99px;padding:4px 11px;font-weight:600}.lk.wide{display:block;text-align:center;background:var(--rose);color:#fff;padding:12px;border-radius:16px;font-size:14px}
+.ck{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);background:none;flex:0 0 26px;align-self:center;display:grid;place-items:center;color:#fff;font-size:14px}
+.done .ck{background:var(--ok);border-color:var(--ok)}
+.empty{text-align:center;color:var(--mute);padding:36px 20px;border:1.5px dashed var(--line);border-radius:22px;margin:12px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;margin:10px 0}
+.big{font-family:'Bricolage Grotesque',sans-serif;font-size:28px;font-weight:700}
+.bar{height:10px;border-radius:99px;background:var(--bg);overflow:hidden;margin:10px 0 6px}
+.bar i{display:block;height:100%;background:var(--ok);border-radius:99px}
+.bar.over i{background:var(--rose)}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.cr{margin:12px 0}.cr .bar{margin:5px 0 0;height:8px}.cr .bar i{background:var(--gold)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mini{background:var(--bg);border-radius:16px;padding:10px 12px}.mini small{color:var(--mute)}.mini b{display:block}
+.pk{display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px solid var(--line)}
+.pk .t{flex:1}.x{border:0;background:none;color:var(--mute);font-size:18px;padding:4px 8px}
+.add{display:flex;gap:8px;margin:12px 0}
+.add input{flex:1}
+input,select,textarea{width:100%;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:11px 13px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--rose)}
+.btn{border:0;background:var(--rose);color:#fff;border-radius:14px;padding:11px 18px;font-weight:600;cursor:pointer}
+.btn.s{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.btn.r{background:none;color:var(--rose);border:1px solid var(--rose)}
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:0 0 env(safe-area-inset-bottom,0px);background:var(--card);border-top:1px solid var(--line);z-index:5}
+.nav div{display:flex;width:100%;max-width:520px}
+.nav button{flex:1;border:0;background:none;padding:10px 0 12px;color:var(--mute);font-size:11.5px}
+.nav button span{display:block;font-size:20px;line-height:1.2}
+.nav button.on{color:var(--rose);font-weight:600}
+.fab{position:fixed;right:max(18px,calc(50% - 242px));bottom:calc(84px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:20px;border:0;background:var(--rose);color:#fff;font-size:30px;box-shadow:0 8px 22px rgba(224,96,126,.4);z-index:6}
+#sh{display:none;position:fixed;inset:0;z-index:20}#sh.on{display:block}
+.bk{position:absolute;inset:0;background:rgba(10,25,24,.5)}
+.pn{position:absolute;left:0;right:0;bottom:0;max-width:520px;margin:0 auto;background:var(--bg);border-radius:28px 28px 0 0;padding:18px 18px calc(22px + env(safe-area-inset-bottom,0px));max-height:90vh;overflow-y:auto;animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:.5}to{transform:none;opacity:1}}
+.pn h3{font-size:21px;margin-bottom:12px}
+.f{margin:10px 0}.f label{display:block;font-size:12.5px;color:var(--mute);margin-bottom:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cats{display:flex;gap:7px;flex-wrap:wrap}
+.cats button{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:7px 12px;font-size:13px}
+.cats button.on{background:var(--rose);border-color:var(--rose);color:#fff}
+.acts{display:flex;gap:10px;margin-top:16px}.acts .btn:last-child{flex:1}
+@media (prefers-reduced-motion:reduce){.pn{animation:none}}
+</style></head>
+<body>
+<div id="app"></div><div id="sh"></div>
+<script>
+const $=s=>document.querySelector(s);
+const CATS={transport:['✈️','Transport'],stay:['🏨','Penginapan'],food:['🍜','Makan'],sight:['🏛️','Wisata'],shop:['🛍️','Belanja'],other:['✨','Lainnya']};
+window.TRIPID=(()=>{let c=location.hash.replace(/[^\w-]/g,'');if(!c){c=Math.random().toString(36).slice(2,10)+Math.random().toString(36).slice(2,6);try{location.hash=c}catch(e){}}return c})();
+const LS='itin_'+window.TRIPID;
+let S,tab='plan',day=0,cat='sight';
+const uid=()=>Math.random().toString(36).slice(2,9);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rp=n=>'Rp '+Math.round(n||0).toLocaleString('id-ID');
+const def=()=>({trip:{name:'',dest:'',start:'',end:'',budget:20000000},items:[],pack:['Paspor','Tiket dan boarding pass','Charger dan power bank','Adaptor colokan','Obat pribadi','Uang tunai dan kartu','Pakaian sesuai cuaca','Asuransi perjalanan'].map(t=>({id:uid(),t,done:false})),notes:[]});
+function load(){try{S=JSON.parse(localStorage.getItem(LS)||'null')}catch(e){S=null}if(!S)S=def()}
+let SYNC='';
+function save(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}
+ if(window.FBpush)window.FBpush(JSON.stringify(S))}
+function days(){const{start,end}=S.trip;if(!start||!end)return[];const a=new Date(start+'T00:00'),b=new Date(end+'T00:00');if(isNaN(a)||isNaN(b)||b<a)return[];const n=Math.min(30,Math.round((b-a)/864e5)+1);return Array.from({length:n},(_,i)=>{const d=new Date(a);d.setDate(a.getDate()+i);return d})}
+const fd=(d,o)=>d.toLocaleDateString('id-ID',o);
+function countdown(){if(!S.trip.start)return'';const n=Math.ceil((new Date(S.trip.start+'T00:00')-new Date())/864e5);return n>0?'H-'+n:n>-1?'Berangkat hari ini':'Sedang atau sudah lewat'}
+function render(){
+ const D=days(),t=S.trip;if(day>=D.length)day=0;
+ let h=`<div class="hero"><small>${esc(t.dest)||'Tujuan belum diisi'}</small><h1>${esc(t.name)||'Liburan baru'}</h1><div class="chips">${D.length?`<span class="chip">${fd(D[0],{day:'numeric',month:'short'})} sampai ${fd(D[D.length-1],{day:'numeric',month:'short',year:'numeric'})}</span><span class="chip">${D.length} hari</span>`:'<span class="chip">Atur tanggal dulu</span>'}${countdown()?`<span class="chip g">${countdown()}</span>`:''}${SYNC?`<span class="chip">${SYNC}</span>`:''}</div><button class="edit" onclick="tripSheet()">Ubah</button></div>`;
+ if(tab==='plan')h+=plan(D);else if(tab==='bud')h+=budget(D);else if(tab==='pack')h+=pack();else h+=info();
+ h+=`<div class="nav"><div>${[['plan','🗓️','Rencana'],['bud','💸','Budget'],['pack','🧳','Bawaan'],['info','📌','Info']].map(x=>`<button class="${tab===x[0]?'on':''}" onclick="tab='${x[0]}';render();scrollTo(0,0)"><span>${x[1]}</span>${x[2]}</button>`).join('')}</div></div>`;
+ if(tab!=='pack')h+=`<button class="fab" aria-label="Tambah" onclick="${tab==='info'?'noteSheet()':tab==='bud'?'tripSheet()':'itemSheet()'}">${tab==='bud'?'✎':'+'}</button>`;
+ $('#app').innerHTML=h;loadWx();
+}
+function plan(D){
+ if(!D.length)return`<div class="sec"><div class="empty">Isi nama trip, tujuan, dan tanggal dulu supaya hari-harinya muncul.<br><br><button class="btn" onclick="tripSheet()">Atur trip</button></div></div>`;
+ let h=`<div class="sec" style="padding-bottom:0"><a class="lk wide" href="https://www.google.com/maps/search/restoran+terdekat" target="_blank" rel="noopener">🍜 Cari makan terdekat dari lokasiku</a><div class="lks"><a class="lk" href="https://www.google.com/maps/search/ATM+terdekat" target="_blank" rel="noopener">🏧 ATM terdekat</a><a class="lk" href="https://www.google.com/maps/search/halte+stasiun+transportasi+umum+terdekat" target="_blank" rel="noopener">🚇 Transportasi terdekat</a><a class="lk" href="https://www.google.com/search?q=${encodeURIComponent('cuaca '+(S.trip.dest||''))}" target="_blank" rel="noopener">🌤️ Cuaca</a></div><div class="lks"><a class="lk" href="https://www.tiket.com/pesawat" target="_blank" rel="noopener">✈️ Tiket.com</a><a class="lk" href="https://www.traveloka.com/id-id/flight" target="_blank" rel="noopener">✈️ Traveloka</a><a class="lk" href="https://www.tiket.com/hotel" target="_blank" rel="noopener">🏨 Tiket.com</a><a class="lk" href="https://www.traveloka.com/id-id/hotel" target="_blank" rel="noopener">🏨 Traveloka</a></div></div><div class="days">${D.map((d,i)=>`<div class="d ${i===day?'on':''}" onclick="day=${i};render()"><b>${d.getDate()}</b><span>${fd(d,{weekday:'short'})} · H${i+1}</span></div>`).join('')}</div>`;
+ h+=wxCard(D[day]);const its=S.items.filter(x=>x.day===day).sort((a,b)=>(a.time||'99').localeCompare(b.time||'99'));
+ const tot=its.reduce((s,x)=>s+(+x.cost||0),0);
+ h+=`<div class="sec"><div class="dh"><h2>Hari ${day+1}, ${fd(D[day],{weekday:'long',day:'numeric',month:'long'})}</h2><span>${its.length?rp(tot)+' ':''}<a class="lk" href="https://www.google.com/search?q=${encodeURIComponent('cuaca '+(S.trip.dest||'')+' '+fd(D[day],{day:'numeric',month:'long',year:'numeric'}))}" target="_blank" rel="noopener">🌤️ Cuaca</a></span></div>`;
+ if(!its.length)h+=`<div class="empty">Belum ada rencana di hari ini.<br>Ketuk tombol + untuk menambah.</div>`;
+ its.forEach(x=>{const c=CATS[x.cat]||CATS.other;h+=`<div class="item ${x.done?'done':''}"><div class="tm">${esc(x.time)||'--:--'}</div><div class="ic">${c[0]}</div><div class="bd2" onclick="itemSheet('${x.id}')"><div class="t">${esc(x.title)}</div>${x.place?`<div class="pl">📍 ${esc(x.place)}</div>`:''}${x.note?`<div class="nt">${esc(x.note)}</div>`:''}${+x.cost?`<span class="cost">${rp(x.cost)}</span>`:''}${links(x)}</div><button class="ck" aria-label="Selesai" onclick="tog('${x.id}')">${x.done?'✓':''}</button></div>`});
+ return h+'</div>';
+}
+const WC={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌦️',61:'🌧️',63:'🌧️',65:'🌧️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
+let WX=null,WXkey='';
+const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+async function loadWx(){
+ const t=S.trip;if(!t.dest||!t.start){WX=null;return}
+ const key=t.dest+'|'+t.start;if(key===WXkey)return;WXkey=key;WX={st:'load'};
+ try{
+  const g=await (await fetch('https://geocoding-api.open-meteo.com/v1/search?count=1&language=id&name='+encodeURIComponent(t.dest.split(',')[0].trim()))).json();
+  if(!g.results||!g.results[0]){WX={st:'nf'};render();return}
+  const r=g.results[0];
+  const f=await (await fetch('https://api.open-meteo.com/v1/forecast?latitude='+r.latitude+'&longitude='+r.longitude+'&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=16')).json();
+  WX={st:'ok',place:r.name+(r.country?', '+r.country:''),days:f.daily};
+ }catch(e){WX={st:'err'}}
+ render();
+}
+function wxCard(d){
+ if(!WX)return'';const box=t=>'<div class="card" style="margin:10px 14px 0;padding:12px 16px">'+t+'</div>';
+ if(WX.st==='load')return box('<span class="pl">Memuat cuaca...</span>');
+ if(WX.st==='nf')return box('<span class="pl">Cuaca: kota tujuan tidak ditemukan. Coba tulis nama kotanya saja.</span>');
+ if(WX.st!=='ok')return box('<span class="pl">Cuaca gagal dimuat. Cek koneksi lalu muat ulang.</span>');
+ const D=WX.days,i=D.time.indexOf(ymd(d));
+ if(i<0)return box('<span class="pl">Prakiraan untuk tanggal ini belum tersedia. Prakiraan hanya ada sampai 16 hari ke depan.</span>');
+ const p=D.precipitation_probability_max[i];
+ return box('<div class="row"><div><span style="font-size:30px">'+(WC[D.weather_code[i]]||'🌡️')+'</span> <b>'+Math.round(D.temperature_2m_min[i])+'° sampai '+Math.round(D.temperature_2m_max[i])+'°C</b></div><span class="pl">Hujan '+(p==null?'-':p+'%')+'</span></div><div class="pl">'+esc(WX.place)+'</div>');
+}
+const MQ=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+function links(x){
+ const where=[x.place||x.title,S.trip.dest].filter(Boolean).join(' ');let a=[];
+ if(x.cat==='transport'){a.push(['✈️ Tiket.com','https://www.tiket.com/pesawat']);a.push(['✈️ Traveloka','https://www.traveloka.com/id-id/flight'])}
+ else if(x.cat==='stay'){a.push(['🏨 Tiket.com','https://www.tiket.com/hotel']);a.push(['🏨 Traveloka','https://www.traveloka.com/id-id/hotel'])}
+ if(x.cat!=='transport'||x.place)a.push(['📍 Maps',MQ(where)]);
+ if(x.place)a.push(['Rute','https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(where)]);
+ if(['sight','stay','shop'].includes(x.cat))a.push(['🍜 Makan dekat sini',MQ('restoran dekat '+where)]);
+ if(x.cat==='stay'){a.push(['🚇 Transportasi',MQ('halte stasiun dekat '+where)]);a.push(['🏧 ATM',MQ('ATM dekat '+where)])}
+ return `<div class="lks" onclick="event.stopPropagation()">${a.map(l=>`<a class="lk" href="${l[1]}" target="_blank" rel="noopener">${l[0]}</a>`).join('')}</div>`;
+}
+function budget(D){
+ const b=+S.trip.budget||0,sp=S.items.reduce((s,x)=>s+(+x.cost||0),0),dn=S.items.filter(x=>x.done).reduce((s,x)=>s+(+x.cost||0),0),pc=b?Math.min(100,sp/b*100):0;
+ let h=`<div class="sec"><div class="card"><small style="color:var(--mute)">Estimasi total</small><div class="big">${rp(sp)}</div><div class="bar ${sp>b?'over':''}"><i style="width:${pc}%"></i></div><div class="row"><small>${b?Math.round(sp/b*100)+'% dari budget':'Budget belum diisi'}</small><small>${sp>b?'Lewat '+rp(sp-b):'Sisa '+rp(b-sp)}</small></div></div>
+ <div class="grid2"><div class="mini"><small>Budget</small><b>${rp(b)}</b></div><div class="mini"><small>Sudah dijalani</small><b>${rp(dn)}</b></div></div>
+ <div class="card"><h3 style="font-size:17px">Per kategori</h3>`;
+ Object.keys(CATS).forEach(k=>{const v=S.items.filter(x=>x.cat===k).reduce((s,x)=>s+(+x.cost||0),0);h+=`<div class="cr"><div class="row"><span>${CATS[k][0]} ${CATS[k][1]}</span><b>${rp(v)}</b></div><div class="bar"><i style="width:${sp?v/sp*100:0}%"></i></div></div>`});
+ h+=`</div>`;
+ if(D.length){h+=`<div class="card"><h3 style="font-size:17px">Per hari</h3>`;D.forEach((d,i)=>{const v=S.items.filter(x=>x.day===i).reduce((s,x)=>s+(+x.cost||0),0);h+=`<div class="row" style="padding:6px 0"><span>Hari ${i+1} · ${fd(d,{day:'numeric',month:'short'})}</span><b>${rp(v)}</b></div>`});h+='</div>'}
+ return h+`<div class="acts"><button class="btn s" style="flex:1" onclick="shareSheet()">Bagikan itinerary</button></div></div>`;
+}
+function pack(){
+ const n=S.pack.filter(x=>x.done).length;
+ let h=`<div class="sec"><div class="dh"><h2>Bawaan</h2><span>${n} dari ${S.pack.length} siap</span></div><div class="add"><input id="pi" placeholder="Tambah barang" onkeydown="if(event.key==='Enter')addPk()"><button class="btn" onclick="addPk()">Tambah</button></div><div class="card" style="padding:4px 14px">`;
+ if(!S.pack.length)h+='<div class="empty" style="border:0">Daftar masih kosong.</div>';
+ S.pack.forEach(p=>{h+=`<div class="pk ${p.done?'item done':''}" style="${p.done?'margin:0;border-radius:0;border-width:0 0 1px':''}"><button class="ck" onclick="tp('${p.id}')">${p.done?'✓':''}</button><span class="t">${esc(p.t)}</span><button class="x" aria-label="Hapus" onclick="dp('${p.id}')">×</button></div>`});
+ return h+'</div></div>';
+}
+function info(){
+ let h=`<div class="sec"><div class="dh"><h2>Info penting</h2><span>Tiket, hotel, kontak</span></div>`;
+ if(!S.notes.length)h+=`<div class="empty">Simpan nomor booking, alamat hotel, kontak darurat, atau catatan lain di sini.</div>`;
+ S.notes.forEach(n=>{h+=`<div class="card" onclick="noteSheet('${n.id}')"><div class="t">${esc(n.label)}</div><div class="nt" style="white-space:pre-wrap;color:var(--ink);opacity:.85;margin-top:4px">${esc(n.text)}</div></div>`});
+ return h+'</div>';
+}
+function sheet(h){const e=$('#sh');e.innerHTML='<div class="bk" onclick="closeSh()"></div><div class="pn">'+h+'</div>';e.classList.add('on')}
+function closeSh(){$('#sh').classList.remove('on');$('#sh').innerHTML=''}
+const v=id=>$('#'+id).value;
+function tripSheet(){const t=S.trip;sheet(`<h3>Detail trip</h3><div class="f"><label>Nama trip</label><input id="tn" value="${esc(t.name)}" placeholder="Contoh: Musim gugur di Seoul"></div><div class="f"><label>Tujuan</label><input id="td" value="${esc(t.dest)}" placeholder="Kota atau negara"></div><div class="two"><div class="f"><label>Berangkat</label><input id="ts" type="date" value="${t.start}"></div><div class="f"><label>Pulang</label><input id="te" type="date" value="${t.end}"></div></div><div class="f"><label>Budget total (Rp)</label><input id="tb" type="number" inputmode="numeric" value="${t.budget}"></div><div class="acts"><button class="btn s" onclick="closeSh()">Batal</button><button class="btn" onclick="saveTrip()">Simpan</button></div>`)}
+function saveTrip(){S.trip={name:v('tn').trim(),dest:v('td').trim(),start:v('ts'),end:v('te'),budget:+v('tb')||0};save();closeSh();render()}
+function itemSheet(id){
+ const x=S.items.find(i=>i.id===id)||{day,time:'',title:'',place:'',cost:'',note:'',cat:'sight'};cat=x.cat;const D=days();
+ if(!D.length){tripSheet();return}
+ sheet(`<h3>${id?'Ubah kegiatan':'Kegiatan baru'}</h3><div class="f"><label>Nama kegiatan</label><input id="it" value="${esc(x.title)}" placeholder="Contoh: Sarapan di pasar"></div><div class="two"><div class="f"><label>Hari</label><select id="id">${D.map((d,i)=>`<option value="${i}" ${i===x.day?'selected':''}>Hari ${i+1} · ${fd(d,{day:'numeric',month:'short'})}</option>`).join('')}</select></div><div class="f"><label>Jam</label><input id="im" type="time" value="${x.time}"></div></div><div class="f"><label>Kategori</label><div class="cats" id="cs">${Object.keys(CATS).map(k=>`<button class="${k===cat?'on':''}" onclick="setCat('${k}')">${CATS[k][0]} ${CATS[k][1]}</button>`).join('')}</div></div><div class="f"><label>Lokasi</label><input id="ip" value="${esc(x.place)}" placeholder="Nama tempat atau alamat"></div><div class="f"><label>Biaya (Rp)</label><input id="ic" type="number" inputmode="numeric" value="${x.cost}"></div><div class="f"><label>Catatan</label><textarea id="in" rows="2">${esc(x.note)}</textarea></div><div class="acts">${id?`<button class="btn r" onclick="delItem('${id}')">Hapus</button>`:'<button class="btn s" onclick="closeSh()">Batal</button>'}<button class="btn" onclick="saveItem('${id||''}')">Simpan</button></div>`);
+}
+function setCat(k){cat=k;document.querySelectorAll('#cs button').forEach((b,i)=>b.classList.toggle('on',Object.keys(CATS)[i]===k))}
+function saveItem(id){const t=v('it').trim();if(!t){$('#it').focus();return}const o={id:id||uid(),day:+v('id'),time:v('im'),title:t,place:v('ip').trim(),cost:+v('ic')||0,note:v('in').trim(),cat,done:false};
+ if(id){const i=S.items.findIndex(z=>z.id===id);o.done=S.items[i].done;S.items[i]=o}else S.items.push(o);day=o.day;save();closeSh();render()}
+function delItem(id){S.items=S.items.filter(i=>i.id!==id);save();closeSh();render()}
+function tog(id){const i=S.items.find(z=>z.id===id);i.done=!i.done;save();render()}
+function addPk(){const t=v('pi').trim();if(!t)return;S.pack.push({id:uid(),t,done:false});save();render();$('#pi').focus()}
+function tp(id){const p=S.pack.find(z=>z.id===id);p.done=!p.done;save();render()}
+function dp(id){S.pack=S.pack.filter(z=>z.id!==id);save();render()}
+function noteSheet(id){const n=S.notes.find(z=>z.id===id)||{label:'',text:''};sheet(`<h3>${id?'Ubah info':'Info baru'}</h3><div class="f"><label>Judul</label><input id="nl" value="${esc(n.label)}" placeholder="Contoh: Booking hotel"></div><div class="f"><label>Isi</label><textarea id="nx" rows="5" placeholder="Nomor booking, alamat, kontak, dan lain-lain">${esc(n.text)}</textarea></div><div class="acts">${id?`<button class="btn r" onclick="delNote('${id}')">Hapus</button>`:'<button class="btn s" onclick="closeSh()">Batal</button>'}<button class="btn" onclick="saveNote('${id||''}')">Simpan</button></div>`)}
+function saveNote(id){const l=v('nl').trim();if(!l){$('#nl').focus();return}const o={id:id||uid(),label:l,text:v('nx').trim()};if(id){S.notes[S.notes.findIndex(z=>z.id===id)]=o}else S.notes.push(o);save();closeSh();render()}
+function delNote(id){S.notes=S.notes.filter(z=>z.id!==id);save();closeSh();render()}
+function asText(){const D=days(),t=S.trip;let s=`${t.name||'Itinerary'} - ${t.dest}\n`;D.forEach((d,i)=>{s+=`\nHari ${i+1} (${fd(d,{weekday:'long',day:'numeric',month:'long'})})\n`;S.items.filter(x=>x.day===i).sort((a,b)=>(a.time||'99').localeCompare(b.time||'99')).forEach(x=>{s+=`- ${x.time||'--:--'} ${x.title}${x.place?' @ '+x.place:''}${+x.cost?' ('+rp(x.cost)+')':''}\n`})});return s+'\nLink edit bareng: '+location.href}
+function shareSheet(){const s=asText();sheet(`<h3>Bagikan itinerary</h3><textarea id="sx" rows="10" readonly>${esc(s)}</textarea><div class="acts"><button class="btn s" onclick="closeSh()">Tutup</button><button class="btn" onclick="doShare()">Bagikan atau salin</button></div>`)}
+function doShare(){const s=asText();try{if(navigator.share){navigator.share({text:s});return}}catch(e){}$('#sx').select();try{document.execCommand('copy')}catch(e){}}
+load();render();
+window.applyRemote=function(str){try{const n=JSON.parse(str);if(JSON.stringify(n)!==JSON.stringify(S)){S=n;try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}if(!(document.activeElement&&document.activeElement.id==='pi'))render()}}catch(e){}};
+window.hasLocal=()=>!!(S.items.length||S.notes.length||S.trip.name);
+window.setSync=t=>{if(SYNC!==t){SYNC=t;render()}};
+setTimeout(()=>{if(!S.trip.start&&!S.trip.name&&!$('#sh').classList.contains('on'))tripSheet()},1500);
+</script><script type="module">
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import {getDatabase,ref,onValue,set} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+// ===== ISI BAGIAN INI dengan config dari Firebase (lihat panduan) =====
+const firebaseConfig={
+  apiKey:"AIzaSyBAi3RAGYa41B4FgOBcllsNeud2cyQl40w",
+  authDomain:"anindya-519fb.firebaseapp.com",
+  databaseURL:"https://anindya-519fb-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"anindya-519fb",
+  storageBucket:"anindya-519fb.firebasestorage.app",
+  messagingSenderId:"800600222061",
+  appId:"1:800600222061:web:84ded828dd8dfc3e5d1264"
+};
+// =======================================================================
+if(firebaseConfig.databaseURL.includes('NAMA-PROYEK')){
+  window.setSync('Belum terhubung Firebase');
+}else{
+  try{
+    const db=getDatabase(initializeApp(firebaseConfig));
+    const r=ref(db,'trips/'+window.TRIPID);
+    let first=true;
+    window.FBpush=str=>set(r,{state:str,t:Date.now()}).catch(()=>window.setSync('Gagal menyimpan'));
+    onValue(r,snap=>{
+      const v=snap.val();
+      if(v&&v.state)window.applyRemote(v.state);
+      else if(first&&window.hasLocal())window.FBpush(JSON.stringify(S));
+      first=false;window.setSync('🔄 Tersinkron');
+    },()=>window.setSync('Gagal sinkron'));
+  }catch(e){window.setSync('Firebase error')}
+}
+</script>
+</body></html>
