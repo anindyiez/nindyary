@@ -13,14 +13,15 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakar
 body{max-width:520px;margin:0 auto;padding-bottom:96px;min-height:100vh}
 h1,h2,h3{font-family:'Bricolage Grotesque','Plus Jakarta Sans',sans-serif;margin:0;letter-spacing:-.01em}
 button,input,select,textarea{font:inherit;color:inherit}
+.head{margin:12px 14px 0;padding:24px 16px 16px;border-radius:28px;background:var(--rose-s);text-align:center;position:relative}.head .wl{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--rose);font-weight:600}.head h1{font-size:30px;line-height:1.1;margin:6px 0 8px}.head .sub{font-size:14px;opacity:.8}.head .chips{justify-content:center;margin-top:12px}.head .chip{background:var(--card);color:var(--ink);font-size:12.5px}.head .chip.g{background:var(--gold);color:#3a2a00}.head .edit{right:12px;top:12px;background:var(--card);color:var(--rose);padding:5px 12px;font-size:12.5px;font-weight:600}
 .hero{margin:12px 14px 0;padding:22px 20px 20px;border-radius:28px;background:linear-gradient(150deg,var(--hero1),var(--hero2));color:#fff;position:relative;overflow:hidden}
 .hero:after{content:"";position:absolute;right:-40px;top:-50px;width:170px;height:170px;border-radius:50%;background:var(--rose);opacity:.35}
 .hero small{opacity:.8;font-size:13px}
-.hero h1{font-size:30px;line-height:1.1;margin:6px 0 10px;position:relative;z-index:1}
+.hero h1{font-size:30px;line-height:1.1;margin:6px 0 10px;padding-right:64px;position:relative;z-index:1}
 .chips{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1}
 .chip{background:rgba(255,255,255,.16);border-radius:99px;padding:5px 12px;font-size:13px}
 .chip.g{background:var(--gold);color:#3a2a00;font-weight:600}
-.edit{position:absolute;right:14px;bottom:14px;z-index:2;border:0;background:rgba(255,255,255,.2);color:#fff;border-radius:99px;padding:6px 13px;font-size:13px}
+.edit{position:absolute;right:14px;top:14px;z-index:2;border:0;background:rgba(255,255,255,.2);color:#fff;border-radius:99px;padding:6px 13px;font-size:13px}
 .days{display:flex;gap:8px;overflow-x:auto;padding:16px 14px 6px;scrollbar-width:none}
 .days::-webkit-scrollbar{display:none}
 .d{flex:0 0 auto;min-width:62px;text-align:center;border:1px solid var(--line);background:var(--card);border-radius:18px;padding:8px 10px;cursor:pointer}
@@ -28,7 +29,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .d span{font-size:11.5px;color:var(--mute)}
 .d.on{background:var(--rose);border-color:var(--rose);color:#fff}.d.on span{color:#fff;opacity:.9}
 .sec{padding:8px 14px}
-.dh{display:flex;justify-content:space-between;align-items:baseline;padding:10px 4px 4px}
+.dh{flex-wrap:wrap;gap:4px;display:flex;justify-content:space-between;align-items:baseline;padding:10px 4px 4px}
 .dh h2{font-size:19px}.dh span{color:var(--mute);font-size:13px}
 .item{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:12px 12px 12px 14px;margin:10px 0;position:relative}
 .item.done{opacity:.55}.item.done .t{text-decoration:line-through}
@@ -37,6 +38,9 @@ button,input,select,textarea{font:inherit;color:inherit}
 .bd2{flex:1;min-width:0;cursor:pointer}
 .t{font-weight:600}.pl,.nt{color:var(--mute);font-size:13px}
 .cost{display:inline-block;margin-top:5px;font-size:12.5px;background:var(--bg);border-radius:99px;padding:2px 10px}
+.gl{font-size:12px;color:var(--mute);font-weight:600;margin:2px 0 8px}.gl+.g3+.gl,.g3+.gl{margin-top:14px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.lk.b{display:block;text-align:center;padding:11px 6px;border-radius:14px;font-size:13px}select.lk{width:auto;border:0;-webkit-appearance:none;appearance:none;font-family:inherit;cursor:pointer}
+.dd{position:relative;display:inline-block}.dd summary{list-style:none;cursor:pointer}.dd summary::-webkit-details-marker{display:none}.ddm{position:absolute;z-index:8;top:100%;left:0;margin-top:4px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px;min-width:150px;box-shadow:0 8px 20px rgba(0,0,0,.18)}.ddm a{display:block;padding:10px 12px;text-decoration:none;color:var(--ink);border-radius:10px;font-size:14px}
 .lks{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.lk{font-size:12.5px;text-decoration:none;color:var(--rose);background:var(--rose-s);border-radius:99px;padding:4px 11px;font-weight:600}.lk.wide{display:block;text-align:center;background:var(--rose);color:#fff;padding:12px;border-radius:16px;font-size:14px}
 .ck{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);background:none;flex:0 0 26px;align-self:center;display:grid;place-items:center;color:#fff;font-size:14px}
 .done .ck{background:var(--ok);border-color:var(--ok)}
@@ -83,9 +87,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--rose)}
 <script>
 const $=s=>document.querySelector(s);
 const CATS={transport:['✈️','Transport'],stay:['🏨','Penginapan'],food:['🍜','Makan'],sight:['🏛️','Wisata'],shop:['🛍️','Belanja'],other:['✨','Lainnya']};
-window.TRIPID=(()=>{let c=location.hash.replace(/[^\w-]/g,'');if(!c){c=Math.random().toString(36).slice(2,10)+Math.random().toString(36).slice(2,6);try{location.hash=c}catch(e){}}return c})();
+window.TRIPID=(()=>{let c=location.hash.replace(/[^\w-]/g,'');if(!c){try{c=localStorage.getItem('lastTrip')||''}catch(e){}}if(!c)c=Math.random().toString(36).slice(2,10)+Math.random().toString(36).slice(2,6);try{localStorage.setItem('lastTrip',c)}catch(e){}if(!location.hash){try{location.hash=c}catch(e){}}return c})();
 const LS='itin_'+window.TRIPID;
-let S,tab='plan',day=0,cat='sight';
+let S,tab='info',day=0,cat='sight';
 const uid=()=>Math.random().toString(36).slice(2,9);
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const rp=n=>'Rp '+Math.round(n||0).toLocaleString('id-ID');
@@ -97,22 +101,23 @@ function save(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}
 function days(){const{start,end}=S.trip;if(!start||!end)return[];const a=new Date(start+'T00:00'),b=new Date(end+'T00:00');if(isNaN(a)||isNaN(b)||b<a)return[];const n=Math.min(30,Math.round((b-a)/864e5)+1);return Array.from({length:n},(_,i)=>{const d=new Date(a);d.setDate(a.getDate()+i);return d})}
 const fd=(d,o)=>d.toLocaleDateString('id-ID',o);
 function countdown(){if(!S.trip.start)return'';const n=Math.ceil((new Date(S.trip.start+'T00:00')-new Date())/864e5);return n>0?'H-'+n:n>-1?'Berangkat hari ini':'Sedang atau sudah lewat'}
-function render(){
+function mig(){S.items.forEach(x=>{if(x.real===undefined){if(x.exp){x.real=+x.cost||0;x.cost=0}else x.real=x.done?(+x.cost||0):0}})}
+function render(){mig();
  const D=days(),t=S.trip;if(day>=D.length)day=0;
- let h=`<div class="hero"><small>${esc(t.dest)||'Tujuan belum diisi'}</small><h1>${esc(t.name)||'Liburan baru'}</h1><div class="chips">${D.length?`<span class="chip">${fd(D[0],{day:'numeric',month:'short'})} sampai ${fd(D[D.length-1],{day:'numeric',month:'short',year:'numeric'})}</span><span class="chip">${D.length} hari</span>`:'<span class="chip">Atur tanggal dulu</span>'}${countdown()?`<span class="chip g">${countdown()}</span>`:''}${SYNC?`<span class="chip">${SYNC}</span>`:''}</div><button class="edit" onclick="tripSheet()">Ubah</button></div>`;
+ let h=`<div class="head"><button class="edit" onclick="tripSheet()">Ubah</button><div class="wl">welcome to</div><h1>${esc(t.title||('The '+(t.dest||'Jakarta')+' Diaries'))}</h1><div class="sub">${esc(t.sub||'Anindya & Najma · two girls, one city, zero rush')}</div><div class="chips">${D.length?`<span class="chip">${fd(D[0],{day:'numeric',month:'short'})} sampai ${fd(D[D.length-1],{day:'numeric',month:'short',year:'numeric'})}</span><span class="chip">${D.length} hari</span>`:'<span class="chip">Atur tanggal dulu</span>'}${countdown()?`<span class="chip g">${countdown()}</span>`:''}${SYNC?`<span class="chip">${SYNC}</span>`:''}</div></div>`;
  if(tab==='plan')h+=plan(D);else if(tab==='bud')h+=budget(D);else if(tab==='pack')h+=pack();else h+=info();
- h+=`<div class="nav"><div>${[['plan','🗓️','Rencana'],['bud','💸','Budget'],['pack','🧳','Bawaan'],['info','📌','Info']].map(x=>`<button class="${tab===x[0]?'on':''}" onclick="tab='${x[0]}';render();scrollTo(0,0)"><span>${x[1]}</span>${x[2]}</button>`).join('')}</div></div>`;
- if(tab!=='pack')h+=`<button class="fab" aria-label="Tambah" onclick="${tab==='info'?'noteSheet()':tab==='bud'?'tripSheet()':'itemSheet()'}">${tab==='bud'?'✎':'+'}</button>`;
+ h+=`<div class="nav"><div>${[['info','📌','Info'],['plan','🗓️','Rencana'],['bud','💸','Realisasi'],['pack','🧳','Bawaan']].map(x=>`<button class="${tab===x[0]?'on':''}" onclick="tab='${x[0]}';render();scrollTo(0,0)"><span>${x[1]}</span>${x[2]}</button>`).join('')}</div></div>`;
+ if(tab!=='pack')h+=`<button class="fab" aria-label="Tambah" onclick="${tab==='info'?'noteSheet()':'itemSheet()'}">+</button>`;
  $('#app').innerHTML=h;loadWx();
 }
 function plan(D){
  if(!D.length)return`<div class="sec"><div class="empty">Isi nama trip, tujuan, dan tanggal dulu supaya hari-harinya muncul.<br><br><button class="btn" onclick="tripSheet()">Atur trip</button></div></div>`;
- let h=`<div class="sec" style="padding-bottom:0"><a class="lk wide" href="https://www.google.com/maps/search/restoran+terdekat" target="_blank" rel="noopener">🍜 Cari makan terdekat dari lokasiku</a><div class="lks"><a class="lk" href="https://www.google.com/maps/search/ATM+terdekat" target="_blank" rel="noopener">🏧 ATM terdekat</a><a class="lk" href="https://www.google.com/maps/search/halte+stasiun+transportasi+umum+terdekat" target="_blank" rel="noopener">🚇 Transportasi terdekat</a><a class="lk" href="https://www.google.com/search?q=${encodeURIComponent('cuaca '+(S.trip.dest||''))}" target="_blank" rel="noopener">🌤️ Cuaca</a></div><div class="lks"><a class="lk" href="https://www.tiket.com/pesawat" target="_blank" rel="noopener">✈️ Tiket.com</a><a class="lk" href="https://www.traveloka.com/id-id/flight" target="_blank" rel="noopener">✈️ Traveloka</a><a class="lk" href="https://www.tiket.com/hotel" target="_blank" rel="noopener">🏨 Tiket.com</a><a class="lk" href="https://www.traveloka.com/id-id/hotel" target="_blank" rel="noopener">🏨 Traveloka</a></div></div><div class="days">${D.map((d,i)=>`<div class="d ${i===day?'on':''}" onclick="day=${i};render()"><b>${d.getDate()}</b><span>${fd(d,{weekday:'short'})} · H${i+1}</span></div>`).join('')}</div>`;
- h+=wxCard(D[day]);const its=S.items.filter(x=>x.day===day).sort((a,b)=>(a.time||'99').localeCompare(b.time||'99'));
- const tot=its.reduce((s,x)=>s+(+x.cost||0),0);
- h+=`<div class="sec"><div class="dh"><h2>Hari ${day+1}, ${fd(D[day],{weekday:'long',day:'numeric',month:'long'})}</h2><span>${its.length?rp(tot)+' ':''}<a class="lk" href="https://www.google.com/search?q=${encodeURIComponent('cuaca '+(S.trip.dest||'')+' '+fd(D[day],{day:'numeric',month:'long',year:'numeric'}))}" target="_blank" rel="noopener">🌤️ Cuaca</a></span></div>`;
+ let h=planDash()+`<div class="days">${D.map((d,i)=>`<div class="d ${i===day?'on':''}" onclick="day=${i};render()"><b>${d.getDate()}</b><span>${fd(d,{weekday:'short'})} · H${i+1}</span></div>`).join('')}</div>`;
+ h+=wxCard(D[day]);const its=S.items.filter(x=>x.day===day&&!x.exp).sort((a,b)=>(a.time||'99').localeCompare(b.time||'99'));
+ const dayAll=S.items.filter(x=>x.day===day),tot=dayAll.reduce((s,x)=>s+(+x.cost||0),0),rl=dayAll.reduce((s,x)=>s+(+x.real||0),0);
+ h+=`<div class="sec"><div class="dh"><h2>Hari ${day+1}, ${fd(D[day],{weekday:'long',day:'numeric',month:'long'})}</h2><span>${tot?'Rencana '+rp(tot):''}${rl?' · Real '+rp(rl)+' ':' '}<a class="lk" href="https://www.google.com/search?q=${encodeURIComponent('cuaca '+(S.trip.dest||'')+' '+fd(D[day],{day:'numeric',month:'long',year:'numeric'}))}" target="_blank" rel="noopener">🌤️ Cuaca</a></span></div>`;
  if(!its.length)h+=`<div class="empty">Belum ada rencana di hari ini.<br>Ketuk tombol + untuk menambah.</div>`;
- its.forEach(x=>{const c=CATS[x.cat]||CATS.other;h+=`<div class="item ${x.done?'done':''}"><div class="tm">${esc(x.time)||'--:--'}</div><div class="ic">${c[0]}</div><div class="bd2" onclick="itemSheet('${x.id}')"><div class="t">${esc(x.title)}</div>${x.place?`<div class="pl">📍 ${esc(x.place)}</div>`:''}${x.note?`<div class="nt">${esc(x.note)}</div>`:''}${+x.cost?`<span class="cost">${rp(x.cost)}</span>`:''}${links(x)}</div><button class="ck" aria-label="Selesai" onclick="tog('${x.id}')">${x.done?'✓':''}</button></div>`});
+ its.forEach(x=>{const c=CATS[x.cat]||CATS.other;h+=`<div class="item ${x.done?'done':''}"><div class="tm">${esc(x.time)||'--:--'}</div><div class="ic">${c[0]}</div><div class="bd2" onclick="itemSheet('${x.id}')"><div class="t">${esc(x.title)}</div>${x.place?`<div class="pl">📍 ${esc(x.place)}</div>`:''}${x.note?`<div class="nt">${esc(x.note)}</div>`:''}${lns(x)}${+x.cost?`<span class="cost">Rencana ${rp(x.cost)}</span> `:''}${+x.real?`<span class="cost" style="background:var(--rose-s);color:var(--rose)">Real ${rp(x.real)} · ${esc(ppl()[x.payer||0]||'')}</span>`:''}${links(x)}</div><button class="ck" aria-label="Selesai" onclick="tog('${x.id}')">${x.done?'✓':''}</button></div>`});
  return h+'</div>';
 }
 const WC={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌦️',61:'🌧️',63:'🌧️',65:'🌧️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
@@ -140,26 +145,87 @@ function wxCard(d){
  const p=D.precipitation_probability_max[i];
  return box('<div class="row"><div><span style="font-size:30px">'+(WC[D.weather_code[i]]||'🌡️')+'</span> <b>'+Math.round(D.temperature_2m_min[i])+'° sampai '+Math.round(D.temperature_2m_max[i])+'°C</b></div><span class="pl">Hujan '+(p==null?'-':p+'%')+'</span></div><div class="pl">'+esc(WX.place)+'</div>');
 }
+const ppl=()=>(S.trip.people&&S.trip.people.length?S.trip.people:['Nindy','Najma']);
+const dd=(label,o)=>'<details class="dd"><summary class="lk">'+label+' ▾</summary><div class="ddm">'+o.map(x=>'<a href="'+x[1]+'" target="_blank" rel="noopener" onclick="this.closest(\'details\').open=false">'+x[0]+'</a>').join('')+'</div></details>';
+const FLY=[['Tiket.com','https://www.tiket.com/pesawat'],['Traveloka','https://www.traveloka.com/id-id/flight']],HTL=[['Tiket.com','https://www.tiket.com/hotel'],['Traveloka','https://www.traveloka.com/id-id/hotel']];
+function rurl(){const q=($('#rt')||{value:''}).value.trim();return q?'https://www.google.com/maps/dir/?api=1&travelmode=transit&destination='+encodeURIComponent(q+' '+(S.trip.dest||'')):'#'}
+function ru(){const a=$('#rl');if(a)a.href=rurl()}
+function balCard(){const P=ppl(),n=P.length,pd=Array(n).fill(0),sh=Array(n).fill(0);
+ S.items.forEach(x=>{const c=+x.real||0;if(!c)return;const p=Math.min(+x.payer||0,n-1);pd[p]+=c;if(x.split==='sendiri')sh[p]+=c;else for(let i=0;i<n;i++)sh[i]+=c/n});
+ const net=pd.map((a,i)=>a-sh[i]);let t='Impas, tidak ada utang piutang.';
+ if(n===2&&Math.abs(net[0])>=1){const a=net[0]<0?0:1;t=esc(P[a])+' bayar ke '+esc(P[1-a])+' sebesar '+rp(Math.abs(net[0]))}
+ return '<div class="card"><h3 style="font-size:17px">Patungan</h3>'+P.map((m,i)=>'<div class="row" style="padding:7px 0"><b>'+esc(m)+'</b><span class="pl">Bayar '+rp(pd[i])+' · Porsi '+rp(sh[i])+'</span></div>').join('')+'<div class="mini" style="margin-top:8px"><small>Yang perlu dilunasi</small><b>'+t+'</b></div></div>'}
+const quickInner=()=>`<div class="card"><div class="gl">Terdekat dari lokasimu</div><div class="g3"><a class="lk b" href="https://www.google.com/maps/search/restoran+terdekat" target="_blank" rel="noopener">🍜 Makan</a><a class="lk b" href="https://www.google.com/maps/search/ATM+terdekat" target="_blank" rel="noopener">🏧 ATM</a><a class="lk b" href="https://www.google.com/maps/search/halte+stasiun+transportasi+umum+terdekat" target="_blank" rel="noopener">🚇 Transport</a></div><div class="gl">Transportasi, akomodasi, dan cuaca</div><div class="lks" style="margin-top:0">${dd('✈️ Tiket pesawat',FLY)}${dd('🏨 Hotel',HTL)}<a class="lk" href="https://www.google.com/search?q=${encodeURIComponent('cuaca '+(S.trip.dest||''))}" target="_blank" rel="noopener">🌤️ Cuaca</a></div></div>`;
+function planDash(){const P=ppl(),n=P.length,b=+S.trip.budget||0,pl=S.items.reduce((s,x)=>s+(+x.cost||0),0);
+ const sh=P.map((_,i)=>S.items.reduce((s,x)=>{const c=+x.cost||0,p=Math.min(+x.payer||0,n-1);return s+(x.split==='sendiri'?(p===i?c:0):c/n)},0));
+ return `<div class="sec" style="padding-bottom:0"><div class="card" style="margin:0"><small style="color:var(--mute)">Rencana pengeluaran</small><div class="big">${rp(pl)}</div><div class="pl">${b?(pl>b?'Melebihi budget '+rp(pl-b):'Sisa dari budget '+rp(b-pl)):'Budget belum diisi'}</div><div class="grid2" style="margin-top:10px">${P.map((m,i)=>`<div class="mini"><small>Rencana ${esc(m)}</small><b>${rp(sh[i])}</b></div>`).join('')}</div></div></div>`}
+const welcome=()=>`<div class="card" style="background:var(--rose-s);border:0;text-align:center;padding:22px 16px"><div style="font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--rose);font-weight:600">welcome to</div><div style="font-family:'Bricolage Grotesque',sans-serif;font-size:30px;font-weight:700;line-height:1.1;margin:6px 0 8px">The ${esc(S.trip.dest||'Jakarta')} Diaries</div><div style="font-size:14px;opacity:.8">Anindya &amp; Najma · two girls, one city, zero rush</div></div>`;
+let dl=null;
+function askDel(id){dl=id;render();setTimeout(()=>{if(dl===id){dl=null;render()}},4000)}
+const lrow=(n,p)=>'<div class="pk"><input value="'+esc(n)+'" placeholder="Menu" style="flex:1"><input type="number" inputmode="numeric" value="'+(p||'')+'" placeholder="Harga" style="width:104px" oninput="sumL()"></div>';
+function addL(){$('#ll').insertAdjacentHTML('beforeend',lrow('',''))}
+function sumL(){let t=0;document.querySelectorAll('#ll .pk').forEach(r=>{t+=+r.querySelectorAll('input')[1].value||0});const e=$('#ir');if(e&&t>0)e.value=t}
+const lns=x=>x.lines&&x.lines.length?'<div class="pl" style="margin-top:3px">'+x.lines.map(l=>'• '+esc(l.n)+' · '+rp(l.p)).join('<br>')+'</div>':'';
+function getL(sel){const o=[];document.querySelectorAll(sel+' .pk').forEach(r=>{const i=r.querySelectorAll('input'),n=i[0].value.trim(),p=+i[1].value;if(n&&p>0)o.push({n,p})});return o}
 const MQ=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+function prevPlace(x){const l=S.items.filter(z=>z.day===x.day&&z.place).sort((p,q)=>(p.time||'99').localeCompare(q.time||'99'));const i=l.findIndex(z=>z.id===x.id);return i>0?l[i-1].place:''}
 function links(x){
  const where=[x.place||x.title,S.trip.dest].filter(Boolean).join(' ');let a=[];
- if(x.cat==='transport'){a.push(['✈️ Tiket.com','https://www.tiket.com/pesawat']);a.push(['✈️ Traveloka','https://www.traveloka.com/id-id/flight'])}
- else if(x.cat==='stay'){a.push(['🏨 Tiket.com','https://www.tiket.com/hotel']);a.push(['🏨 Traveloka','https://www.traveloka.com/id-id/hotel'])}
+ if(x.cat==='transport')a.push(['','',dd('✈️ Cari tiket',FLY)]);
+ else if(x.cat==='stay')a.push(['','',dd('🏨 Cari hotel',HTL)]);
  if(x.cat!=='transport'||x.place)a.push(['📍 Maps',MQ(where)]);
- if(x.place)a.push(['Rute','https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(where)]);
+ if(x.place){a.push(['Rute','https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(where)]);a.push(['🚌 Naik umum','https://www.google.com/maps/dir/?api=1&travelmode=transit&destination='+encodeURIComponent(where)+(prevPlace(x)?'&origin='+encodeURIComponent(prevPlace(x)+' '+(S.trip.dest||'')):'')])}
  if(['sight','stay','shop'].includes(x.cat))a.push(['🍜 Makan dekat sini',MQ('restoran dekat '+where)]);
  if(x.cat==='stay'){a.push(['🚇 Transportasi',MQ('halte stasiun dekat '+where)]);a.push(['🏧 ATM',MQ('ATM dekat '+where)])}
- return `<div class="lks" onclick="event.stopPropagation()">${a.map(l=>`<a class="lk" href="${l[1]}" target="_blank" rel="noopener">${l[0]}</a>`).join('')}</div>`;
+ a.push(['','',x.id===dl?`<button class="lk" style="border:0;background:var(--rose);color:#fff" onclick="delItem('${x.id}')">Yakin hapus?</button>`:`<button class="lk" style="border:0" onclick="askDel('${x.id}')">🗑️ Hapus</button>`]);
+ return `<div class="lks" onclick="event.stopPropagation()">${a.map(l=>l[2]||`<a class="lk" href="${l[1]}" target="_blank" rel="noopener">${l[0]}</a>`).join('')}</div>`;
 }
-function budget(D){
- const b=+S.trip.budget||0,sp=S.items.reduce((s,x)=>s+(+x.cost||0),0),dn=S.items.filter(x=>x.done).reduce((s,x)=>s+(+x.cost||0),0),pc=b?Math.min(100,sp/b*100):0;
- let h=`<div class="sec"><div class="card"><small style="color:var(--mute)">Estimasi total</small><div class="big">${rp(sp)}</div><div class="bar ${sp>b?'over':''}"><i style="width:${pc}%"></i></div><div class="row"><small>${b?Math.round(sp/b*100)+'% dari budget':'Budget belum diisi'}</small><small>${sp>b?'Lewat '+rp(sp-b):'Sisa '+rp(b-sp)}</small></div></div>
- <div class="grid2"><div class="mini"><small>Budget</small><b>${rp(b)}</b></div><div class="mini"><small>Sudah dijalani</small><b>${rp(dn)}</b></div></div>
+let bv=-1;
+function seg(){return '<div class="sec" style="padding-bottom:0"><div class="cats">'+['Semua',...ppl()].map((n,i)=>'<button class="'+(bv===i-1?'on':'')+'" onclick="bv='+(i-1)+';render()">'+(i?'Punya '+esc(n):n)+'</button>').join('')+'</div><button class="btn" style="width:100%;margin-top:10px" onclick="scanSheet()">📷 Scan struk jadi pengeluaran</button></div>'}
+function personView(i){const P=ppl(),n=P.length;i=Math.min(i,n-1);const pi=x=>Math.min(+x.payer||0,n-1);
+ const sh=x=>{const c=+x.real||0;return x.split==='sendiri'?(pi(x)===i?c:0):c/n};
+ const mine=S.items.filter(x=>+x.real&&(pi(x)===i||sh(x)>0));
+ const paid=mine.filter(x=>pi(x)===i).reduce((a,x)=>a+(+x.real),0),por=mine.reduce((a,x)=>a+sh(x),0);
+ let h=seg()+'<div class="sec"><div class="grid2"><div class="mini"><small>Pengeluaranku (porsi)</small><b>'+rp(por)+'</b></div><div class="mini"><small>Yang sudah kubayar</small><b>'+rp(paid)+'</b></div></div>'+balCard();
+ Object.keys(CATS).forEach(k=>{const l=mine.filter(x=>x.cat===k);if(!l.length)return;
+  h+='<div class="card"><div class="row"><b>'+CATS[k][0]+' '+CATS[k][1]+'</b><b>'+rp(l.reduce((a,x)=>a+sh(x),0))+'</b></div>'+l.map(x=>'<div class="row" style="padding:8px 0;border-top:1px solid var(--line);cursor:pointer" onclick="itemSheet(\''+x.id+'\')"><span>'+esc(x.title)+'<div class="pl">Hari '+(x.day+1)+' · dibayar '+esc(P[pi(x)])+(x.split==='sendiri'?' (pribadi)':'')+'</div>'+lns(x)+'</span><span>'+rp(sh(x))+'</span></div>').join('')+'</div>'});
+ if(!mine.length)h+='<div class="empty">Belum ada pengeluaran.</div>';
+ return h+'</div>'}
+function loadTess(){return new Promise((ok,no)=>{if(window.Tesseract)return ok();const e=document.createElement('script');e.src='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';e.onload=ok;e.onerror=no;document.head.appendChild(e)})}
+function scanSheet(){if(!days().length){tripSheet();return}sheet('<h3>Scan struk</h3><div class="pl">Foto struk tegak, terang, dan tidak miring. Hasil bacaan bisa dikoreksi sebelum disimpan. Pertama kali dipakai butuh unduhan beberapa MB.</div><div class="two"><label class="btn" style="text-align:center">📷 Ambil foto<input type="file" accept="image/*" capture="environment" hidden onchange="readBill(this.files[0])"></label><label class="btn s" style="text-align:center">🖼️ Dari galeri<input type="file" accept="image/*" hidden onchange="readBill(this.files[0])"></label></div><div id="bs" class="pl"></div><div class="acts"><button class="btn s" onclick="closeSh()">Batal</button></div>')}
+const TO=(p,ms)=>Promise.race([p,new Promise((_,no)=>setTimeout(()=>no(new Error('timeout')),ms))]);
+function shrink(f){return new Promise(ok=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{try{const k=Math.min(1,1600/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);const g=c.getContext('2d');g.filter='grayscale(1) contrast(1.25)';g.drawImage(im,0,0,c.width,c.height);c.toBlob(b=>{URL.revokeObjectURL(u);ok(b||f)},'image/jpeg',.9)}catch(e){ok(f)}};im.onerror=()=>ok(f);im.src=u})}
+let TW=null,TL=()=>{};
+async function readBill(f){if(!f)return;const st=$('#bs');
+ try{st.textContent='Menyiapkan foto...';const img=await shrink(f);
+  st.textContent='Mengunduh pembaca teks (hanya pertama kali)...';await TO(loadTess(),60000);
+  TL=m=>{const t=m.status||'';st.textContent=t==='recognizing text'?'Membaca struk... '+Math.round(m.progress*100)+'%':/language/.test(t)?'Mengunduh data bahasa (hanya pertama kali)...':'Menyiapkan pembaca...'};
+  if(!TW)TW=await TO(Tesseract.createWorker('eng',1,{logger:m=>TL(m)}),120000);
+  const r=await TO(TW.recognize(img),90000);billSheet(parseBill(r.data.text))}
+ catch(e){TW=null;st.textContent=e.message==='timeout'?'Terlalu lama. Cek koneksi, atau coba foto yang lebih kecil. Kalau kamu membuka halaman simulasi, fitur ini memang hanya jalan di versi GitHub.':'Gagal membaca struk. Coba foto ulang atau isi manual lewat tombol +.'}}
+function parseBill(t){const out=[];t.split('\n').forEach(l=>{l=l.trim();if(!l||/total|tunai|cash|kembali|change|kartu|debit|rounding/i.test(l))return;
+ const m=l.match(/^(.*?)[\s.:]+(?:rp\.?\s*)?(\d{1,3}(?:[.,]\d{3})+|\d{4,})\s*$/i);if(!m)return;
+ const p=parseInt(m[2].replace(/[.,]/g,''),10),n=m[1].replace(/^\d+\s*[xX]?\s+/,'').replace(/[^\w\s&()\/-]/g,' ').trim();if(n&&p>=1000)out.push({n,p})});return out}
+const brow=(n,p)=>'<div class="pk"><input type="checkbox" checked style="width:22px;flex:0 0 22px"><input value="'+esc(n)+'" placeholder="Nama" style="flex:1"><input type="number" inputmode="numeric" value="'+p+'" style="width:104px"></div>';
+function addBl(){$('#bl').insertAdjacentHTML('beforeend',brow('',''))}
+function billSheet(it){const P=ppl();sheet('<h3>Cek hasil scan</h3><div class="pl">Hapus centang yang bukan pesanan, perbaiki nama atau harga bila salah.</div><div id="bl">'+it.map(x=>brow(x.n,x.p)).join('')+'</div><button class="btn s" style="margin:8px 0" onclick="addBl()">+ Baris</button><div class="f"><label>Nama tempat atau makanan</label><input id="bt" value="Makan (struk)"></div><div class="two"><div class="f"><label>Dibayar oleh</label><select id="bpy">'+P.map((n,i)=>'<option value="'+i+'">'+esc(n)+'</option>').join('')+'</select></div><div class="f"><label>Pembagian</label><select id="bsp"><option value="bagi">Dibagi rata</option><option value="sendiri">Pembayar saja</option></select></div></div><div class="f"><label>Hari</label><select id="bd">'+days().map((d,i)=>'<option value="'+i+'"'+(i===day?' selected':'')+'>Hari '+(i+1)+' · '+fd(d,{day:'numeric',month:'short'})+'</option>').join('')+'</select></div><div class="acts"><button class="btn s" onclick="closeSh()">Batal</button><button class="btn" onclick="saveBill()">Simpan</button></div>')}
+function saveBill(){const L=[];document.querySelectorAll('#bl .pk').forEach(r=>{const [ck,nm,pr]=r.querySelectorAll('input'),p=+pr.value;if(ck.checked&&nm.value.trim()&&p>0)L.push({n:nm.value.trim(),p})});
+ if(L.length){S.items.push({id:uid(),day:+v('bd'),time:'',title:v('bt').trim()||'Makan (struk)',place:'',cost:0,real:L.reduce((a,x)=>a+x.p,0),lines:L,payer:+v('bpy'),split:v('bsp'),note:'Dari struk',cat:'food',done:false,exp:true});save()}
+ closeSh();render()}
+function budget(D){if(bv>=0)return personView(bv);
+ const b=+S.trip.budget||0,sm=f=>S.items.reduce((s,x)=>s+(+x[f]||0),0),pl=sm('cost'),re=sm('real'),pc=b?Math.min(100,re/b*100):0;
+ const pend=S.items.filter(x=>!(+x.real)).reduce((s,x)=>s+(+x.cost||0),0),both=S.items.filter(x=>+x.cost&&+x.real),df=both.reduce((s,x)=>s+(+x.cost)-(+x.real),0),fin=re+pend;
+ let h=seg()+`<div class="sec"><div class="card"><small style="color:var(--mute)">Realisasi (sudah dibayar)</small><div class="big">${rp(re)}</div><div class="bar ${re>b?'over':''}"><i style="width:${pc}%"></i></div><div class="row"><small>${b?Math.round(re/b*100)+'% dari budget':'Budget belum diisi'}</small><small>${re>b?'Lewat '+rp(re-b):'Sisa '+rp(b-re)}</small></div></div>
+ <div class="grid2"><div class="mini"><small>Budget</small><b>${rp(b)}</b></div><div class="mini"><small>Rencana (estimasi)</small><b>${rp(pl)}</b></div><div class="mini"><small>Rencana belum dibayar</small><b>${rp(pend)}</b></div><div class="mini"><small>Perkiraan total akhir</small><b style="color:${b&&fin>b?'var(--rose)':'inherit'}">${rp(fin)}</b></div></div>
+ <div class="card"><div class="row"><span>Selisih yang sudah terealisasi</span><b style="color:${df<0?'var(--rose)':'var(--ok)'}">${both.length?(df>=0?'Hemat '+rp(df):'Lebih '+rp(-df)):'-'}</b></div><div class="pl">Rencana dibanding realisasi, hanya untuk item yang punya keduanya.</div></div>
  <div class="card"><h3 style="font-size:17px">Per kategori</h3>`;
- Object.keys(CATS).forEach(k=>{const v=S.items.filter(x=>x.cat===k).reduce((s,x)=>s+(+x.cost||0),0);h+=`<div class="cr"><div class="row"><span>${CATS[k][0]} ${CATS[k][1]}</span><b>${rp(v)}</b></div><div class="bar"><i style="width:${sp?v/sp*100:0}%"></i></div></div>`});
+ Object.keys(CATS).forEach(k=>{const l=S.items.filter(x=>x.cat===k),p=l.reduce((s,x)=>s+(+x.cost||0),0),r=l.reduce((s,x)=>s+(+x.real||0),0),m=Math.max(p,r,1);h+=`<div class="cr"><div class="row"><span>${CATS[k][0]} ${CATS[k][1]}</span><b>${rp(r)}</b></div><div class="pl">Rencana ${rp(p)}</div><div class="bar"><i style="width:${r/m*100}%;${p&&r>p?'background:var(--rose)':''}"></i></div></div>`});
  h+=`</div>`;
- if(D.length){h+=`<div class="card"><h3 style="font-size:17px">Per hari</h3>`;D.forEach((d,i)=>{const v=S.items.filter(x=>x.day===i).reduce((s,x)=>s+(+x.cost||0),0);h+=`<div class="row" style="padding:6px 0"><span>Hari ${i+1} · ${fd(d,{day:'numeric',month:'short'})}</span><b>${rp(v)}</b></div>`});h+='</div>'}
- return h+`<div class="acts"><button class="btn s" style="flex:1" onclick="shareSheet()">Bagikan itinerary</button></div></div>`;
+ if(D.length){h+=`<div class="card"><h3 style="font-size:17px">Per hari</h3>`;D.forEach((d,i)=>{const l=S.items.filter(x=>x.day===i);h+=`<div class="row" style="padding:6px 0"><span>Hari ${i+1} · ${fd(d,{day:'numeric',month:'short'})}</span><span class="pl">Rencana ${rp(l.reduce((s,x)=>s+(+x.cost||0),0))} · Real <b style="color:var(--ink)">${rp(l.reduce((s,x)=>s+(+x.real||0),0))}</b></span></div>`});h+='</div>'}
+ h+=balCard();
+ const ex=S.items.filter(x=>+x.real);
+ h+=`<div class="card"><div class="row"><h3 style="font-size:17px">Pengeluaran (realisasi)</h3><span class="pl">Ketuk untuk ubah</span></div>`+(ex.length?ex.map(x=>`<div class="row" style="padding:9px 0;border-bottom:1px solid var(--line);cursor:pointer" onclick="itemSheet('${x.id}')"><span>${(CATS[x.cat]||CATS.other)[0]} ${esc(x.title)}<div class="pl">Hari ${x.day+1} · ${esc(ppl()[x.payer||0]||'')}${x.split==='sendiri'?' (pribadi)':''}</div>${lns(x)}</span><b>${rp(x.real)}</b></div>`).join(''):'<div class="pl" style="padding:10px 0">Belum ada. Ketuk tombol + untuk mencatat pengeluaran.</div>')+'</div>';
+ return h+`<div class="acts"><button class="btn s" style="flex:1" onclick="tripSheet()">Ubah budget total</button><button class="btn s" style="flex:1" onclick="shareSheet()">Bagikan</button></div></div>`;
 }
 function pack(){
  const n=S.pack.filter(x=>x.done).length;
@@ -169,7 +235,7 @@ function pack(){
  return h+'</div></div>';
 }
 function info(){
- let h=`<div class="sec"><div class="dh"><h2>Info penting</h2><span>Tiket, hotel, kontak</span></div>`;
+ let h=`<div class="sec">${quickInner()}<div class="card"><h3 style="font-size:17px">🚇 Transportasi umum</h3><div class="pl">Untuk rute dari lokasimu ke tujuan beserta jam datangnya (Transjakarta, MRT, LRT, KRL), ketik tujuan di bawah. Jadwal lengkap ada di situs resmi.</div><div class="add"><input id="rt" placeholder="Tujuan, misal: Monas" oninput="ru()" onkeydown="if(event.key==='Enter')$('#rl').click()"><a id="rl" class="btn" href="#" target="_blank" rel="noopener" onclick="ru();if(this.getAttribute('href')==='#')return false" style="text-decoration:none">Cari rute</a></div><div class="lks"><a class="lk" href="https://transjakarta.co.id" target="_blank" rel="noopener">🚌 Transjakarta</a><a class="lk" href="https://jakartamrt.co.id" target="_blank" rel="noopener">🚇 MRT Jakarta</a><a class="lk" href="https://lrtjakarta.co.id" target="_blank" rel="noopener">🚈 LRT Jakarta</a><a class="lk" href="https://commuterline.id" target="_blank" rel="noopener">🚆 KRL</a></div></div><div class="dh"><h2>Info penting</h2><span>Tiket, hotel, kontak</span></div>`;
  if(!S.notes.length)h+=`<div class="empty">Simpan nomor booking, alamat hotel, kontak darurat, atau catatan lain di sini.</div>`;
  S.notes.forEach(n=>{h+=`<div class="card" onclick="noteSheet('${n.id}')"><div class="t">${esc(n.label)}</div><div class="nt" style="white-space:pre-wrap;color:var(--ink);opacity:.85;margin-top:4px">${esc(n.text)}</div></div>`});
  return h+'</div>';
@@ -177,18 +243,20 @@ function info(){
 function sheet(h){const e=$('#sh');e.innerHTML='<div class="bk" onclick="closeSh()"></div><div class="pn">'+h+'</div>';e.classList.add('on')}
 function closeSh(){$('#sh').classList.remove('on');$('#sh').innerHTML=''}
 const v=id=>$('#'+id).value;
-function tripSheet(){const t=S.trip;sheet(`<h3>Detail trip</h3><div class="f"><label>Nama trip</label><input id="tn" value="${esc(t.name)}" placeholder="Contoh: Musim gugur di Seoul"></div><div class="f"><label>Tujuan</label><input id="td" value="${esc(t.dest)}" placeholder="Kota atau negara"></div><div class="two"><div class="f"><label>Berangkat</label><input id="ts" type="date" value="${t.start}"></div><div class="f"><label>Pulang</label><input id="te" type="date" value="${t.end}"></div></div><div class="f"><label>Budget total (Rp)</label><input id="tb" type="number" inputmode="numeric" value="${t.budget}"></div><div class="acts"><button class="btn s" onclick="closeSh()">Batal</button><button class="btn" onclick="saveTrip()">Simpan</button></div>`)}
-function saveTrip(){S.trip={name:v('tn').trim(),dest:v('td').trim(),start:v('ts'),end:v('te'),budget:+v('tb')||0};save();closeSh();render()}
+function tripSheet(){const t=S.trip;sheet(`<h3>Detail trip</h3><div class="f"><label>Nama trip</label><input id="tn" value="${esc(t.name)}" placeholder="Contoh: Musim gugur di Seoul"></div><div class="f"><label>Judul di header</label><input id="ttl" value="${esc(t.title||'')}" placeholder="The Jakarta Diaries"></div><div class="f"><label>Tulisan di bawah judul</label><input id="tsb" value="${esc(t.sub||'')}" placeholder="Anindya & Najma · two girls, one city, zero rush"></div><div class="f"><label>Tujuan</label><input id="td" value="${esc(t.dest)}" placeholder="Kota atau negara"></div><div class="two"><div class="f"><label>Berangkat</label><input id="ts" type="date" value="${t.start}"></div><div class="f"><label>Pulang</label><input id="te" type="date" value="${t.end}"></div></div><div class="f"><label>Budget total (Rp)</label><input id="tb" type="number" inputmode="numeric" value="${t.budget}"></div><div class="two"><div class="f"><label>Nama kamu</label><input id="p0" value="${esc(ppl()[0])}"></div><div class="f"><label>Nama temanmu</label><input id="p1" value="${esc(ppl()[1]||'Najma')}"></div></div><div class="pl" style="margin:8px 0;word-break:break-all">Kode trip: <b>${window.TRIPID}</b>. Kalau isinya kosong, buka link yang berakhiran #${window.TRIPID}</div><div class="acts"><button class="btn s" onclick="closeSh()">Batal</button><button class="btn" onclick="saveTrip()">Simpan</button></div>`)}
+function saveTrip(){S.trip={name:v('tn').trim(),dest:v('td').trim(),start:v('ts'),end:v('te'),budget:+v('tb')||0,people:[v('p0').trim()||'Aku',v('p1').trim()||'Najma'],title:v('ttl').trim(),sub:v('tsb').trim()};save();closeSh();render()}
 function itemSheet(id){
- const x=S.items.find(i=>i.id===id)||{day,time:'',title:'',place:'',cost:'',note:'',cat:'sight'};cat=x.cat;const D=days();
+ const x=S.items.find(i=>i.id===id)||{day,time:'',title:'',place:'',cost:'',note:'',cat:tab==='bud'?'food':'sight'};cat=x.cat;const D=days();
  if(!D.length){tripSheet();return}
- sheet(`<h3>${id?'Ubah kegiatan':'Kegiatan baru'}</h3><div class="f"><label>Nama kegiatan</label><input id="it" value="${esc(x.title)}" placeholder="Contoh: Sarapan di pasar"></div><div class="two"><div class="f"><label>Hari</label><select id="id">${D.map((d,i)=>`<option value="${i}" ${i===x.day?'selected':''}>Hari ${i+1} · ${fd(d,{day:'numeric',month:'short'})}</option>`).join('')}</select></div><div class="f"><label>Jam</label><input id="im" type="time" value="${x.time}"></div></div><div class="f"><label>Kategori</label><div class="cats" id="cs">${Object.keys(CATS).map(k=>`<button class="${k===cat?'on':''}" onclick="setCat('${k}')">${CATS[k][0]} ${CATS[k][1]}</button>`).join('')}</div></div><div class="f"><label>Lokasi</label><input id="ip" value="${esc(x.place)}" placeholder="Nama tempat atau alamat"></div><div class="f"><label>Biaya (Rp)</label><input id="ic" type="number" inputmode="numeric" value="${x.cost}"></div><div class="f"><label>Catatan</label><textarea id="in" rows="2">${esc(x.note)}</textarea></div><div class="acts">${id?`<button class="btn r" onclick="delItem('${id}')">Hapus</button>`:'<button class="btn s" onclick="closeSh()">Batal</button>'}<button class="btn" onclick="saveItem('${id||''}')">Simpan</button></div>`);
+ sheet(`<h3>${id?(tab==='bud'?'Ubah pengeluaran':'Ubah kegiatan'):(tab==='bud'?'Pengeluaran baru':'Kegiatan baru')}</h3><div class="f"><label>Nama kegiatan</label><input id="it" value="${esc(x.title)}" placeholder="Contoh: Sarapan di pasar"></div><div class="two"><div class="f"><label>Hari</label><select id="id">${D.map((d,i)=>`<option value="${i}" ${i===x.day?'selected':''}>Hari ${i+1} · ${fd(d,{day:'numeric',month:'short'})}</option>`).join('')}</select></div><div class="f"><label>Jam</label><input id="im" type="time" value="${x.time}"></div></div><div class="f"><label>Kategori</label><div class="cats" id="cs">${Object.keys(CATS).map(k=>`<button class="${k===cat?'on':''}" onclick="setCat('${k}')">${CATS[k][0]} ${CATS[k][1]}</button>`).join('')}</div></div><div class="f"><label>Lokasi</label><input id="ip" value="${esc(x.place)}" placeholder="Nama tempat atau alamat"></div>${(tab==='bud'&&(!id||x.exp))?`<div class="f"><label>Jumlah yang dibayar (Rp)</label><input id="ir" type="number" inputmode="numeric" value="${x.real||''}"></div><input id="ic" type="hidden" value="${x.cost||0}">`:`<div class="two"><div class="f"><label>Rencana biaya (Rp)</label><input id="ic" type="number" inputmode="numeric" value="${x.cost||''}"></div><div class="f"><label>Realisasi (Rp)</label><input id="ir" type="number" inputmode="numeric" value="${x.real||''}"></div></div>`}<div class="f"><label>Rincian menu (opsional, total otomatis)</label><div id="ll">${(x.lines||[]).map(l=>lrow(l.n,l.p)).join('')}</div><button class="btn s" style="margin-top:6px" onclick="addL()">+ Menu</button></div><div class="two"><div class="f"><label>Dibayar oleh</label><select id="ipy">${ppl().map((n,i)=>`<option value="${i}" ${i===(x.payer||0)?'selected':''}>${esc(n)}</option>`).join('')}</select></div><div class="f"><label>Pembagian</label><select id="isp"><option value="bagi" ${x.split!=='sendiri'?'selected':''}>Dibagi rata</option><option value="sendiri" ${x.split==='sendiri'?'selected':''}>Pembayar saja</option></select></div></div><div class="f"><label>Catatan</label><textarea id="in" rows="2">${esc(x.note)}</textarea></div><div class="acts">${id?`<button class="btn r" onclick="delItem('${id}')">Hapus</button>`:'<button class="btn s" onclick="closeSh()">Batal</button>'}<button class="btn" onclick="saveItem('${id||''}')">Simpan</button></div>`);
 }
 function setCat(k){cat=k;document.querySelectorAll('#cs button').forEach((b,i)=>b.classList.toggle('on',Object.keys(CATS)[i]===k))}
-function saveItem(id){const t=v('it').trim();if(!t){$('#it').focus();return}const o={id:id||uid(),day:+v('id'),time:v('im'),title:t,place:v('ip').trim(),cost:+v('ic')||0,note:v('in').trim(),cat,done:false};
+function saveItem(id){const t=v('it').trim();if(!t){$('#it').focus();return}const o={id:id||uid(),day:+v('id'),time:v('im'),title:t,place:v('ip').trim(),cost:+v('ic')||0,real:+v('ir')||0,lines:getL('#ll'),payer:+v('ipy'),split:v('isp'),note:v('in').trim(),cat,done:false,exp:id?!!(S.items.find(z=>z.id===id)||{}).exp:tab==='bud'};
  if(id){const i=S.items.findIndex(z=>z.id===id);o.done=S.items[i].done;S.items[i]=o}else S.items.push(o);day=o.day;save();closeSh();render()}
-function delItem(id){S.items=S.items.filter(i=>i.id!==id);save();closeSh();render()}
-function tog(id){const i=S.items.find(z=>z.id===id);i.done=!i.done;save();render()}
+function delItem(id){dl=null;S.items=S.items.filter(i=>i.id!==id);save();closeSh();render()}
+function tog(id){const i=S.items.find(z=>z.id===id);i.done=!i.done;
+ if(i.done&&!(+i.real)&&+i.cost){i.real=+i.cost;i.auto=true}else if(!i.done&&i.auto){i.real=0;i.auto=false}
+ save();render()}
 function addPk(){const t=v('pi').trim();if(!t)return;S.pack.push({id:uid(),t,done:false});save();render();$('#pi').focus()}
 function tp(id){const p=S.pack.find(z=>z.id===id);p.done=!p.done;save();render()}
 function dp(id){S.pack=S.pack.filter(z=>z.id!==id);save();render()}
@@ -199,7 +267,7 @@ function asText(){const D=days(),t=S.trip;let s=`${t.name||'Itinerary'} - ${t.de
 function shareSheet(){const s=asText();sheet(`<h3>Bagikan itinerary</h3><textarea id="sx" rows="10" readonly>${esc(s)}</textarea><div class="acts"><button class="btn s" onclick="closeSh()">Tutup</button><button class="btn" onclick="doShare()">Bagikan atau salin</button></div>`)}
 function doShare(){const s=asText();try{if(navigator.share){navigator.share({text:s});return}}catch(e){}$('#sx').select();try{document.execCommand('copy')}catch(e){}}
 load();render();
-window.applyRemote=function(str){try{const n=JSON.parse(str);if(JSON.stringify(n)!==JSON.stringify(S)){S=n;try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}if(!(document.activeElement&&document.activeElement.id==='pi'))render()}}catch(e){}};
+window.applyRemote=function(str){try{const n=JSON.parse(str);if(JSON.stringify(n)!==JSON.stringify(S)){S=n;try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}if(!(document.activeElement&&/^(pi|rt)$/.test(document.activeElement.id)))render()}}catch(e){}};
 window.hasLocal=()=>!!(S.items.length||S.notes.length||S.trip.name);
 window.setSync=t=>{if(SYNC!==t){SYNC=t;render()}};
 setTimeout(()=>{if(!S.trip.start&&!S.trip.name&&!$('#sh').classList.contains('on'))tripSheet()},1500);
