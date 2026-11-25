@@ -113,8 +113,8 @@ function render(){mig();
 }
 function plan(D){
  if(!D.length)return`<div class="sec"><div class="empty">Isi nama trip, tujuan, dan tanggal dulu supaya hari-harinya muncul.<br><br><button class="btn" onclick="tripSheet()">Atur trip</button></div></div>`;
- let h=planDash()+`<div class="days">${D.map((d,i)=>`<div class="d ${i===day?'on':''}" onclick="day=${i};render()"><b>${d.getDate()}</b><span>${fd(d,{weekday:'short'})} · H${i+1}</span></div>`).join('')}</div>`;
- h+=wxCard(D[day]);const its=S.items.filter(x=>(x.day===day||(x.day2!=null&&x.day<day&&x.day2>=day))&&!x.exp).sort((a,b)=>(a.time||'99').localeCompare(b.time||'99'));
+ let h=planDash()+`<div class="sec" style="padding-bottom:0"><button class="btn s" style="width:100%" onclick="suggestSheet()">✨ Saran urutan dan pengelompokan tempat</button></div><div class="days">${D.map((d,i)=>`<div class="d ${i===day?'on':''}" onclick="day=${i};render()"><b>${d.getDate()}</b><span>${fd(d,{weekday:'short'})} · H${i+1}</span></div>`).join('')}</div>`;
+ h+=wxCard(D[day]);const its=S.items.filter(x=>(x.day===day||(x.day2!=null&&x.day<day&&x.day2>=day))&&!x.exp).sort((a,b)=>(a.time||'99').localeCompare(b.time||'99')||((a.ord||0)-(b.ord||0)));
  const dayAll=S.items.filter(x=>x.day===day),tot=dayAll.reduce((s,x)=>s+(+x.cost||0),0),rl=dayAll.reduce((s,x)=>s+(+x.real||0),0);
  h+=`<div class="sec"><div class="dh"><h2>Hari ${day+1}, ${fd(D[day],{weekday:'long',day:'numeric',month:'long'})}</h2><span>${tot?'Rencana '+rp(tot):''}${rl?' · Real '+rp(rl)+' ':' '}<a class="lk" href="https://www.google.com/search?q=${encodeURIComponent('cuaca '+(S.trip.dest||'')+' '+fd(D[day],{day:'numeric',month:'long',year:'numeric'}))}" target="_blank" rel="noopener">🌤️ Cuaca</a></span></div>`;
  if(!its.length)h+=`<div class="empty">Belum ada rencana di hari ini.<br>Ketuk tombol + untuk menambah.</div>`;
@@ -181,8 +181,36 @@ async function photoSheet(id){const m=PH[id];if(!m)return;sheet('<h3>'+(m.t==='s
  try{const f=await FBphoto.full(id);if(f&&$('#pf'))$('#pf').src=f}catch(e){}}
 function delPhoto(id){const b=$('#pdb');if(b.dataset.a!=='1'){b.dataset.a='1';b.textContent='Yakin hapus?';return}FBphoto.del(id).then(closeSh)}
 function capPhoto(id){FBphoto.meta(id,Object.assign({},PH[id],{c:v('pc').trim()})).then(closeSh)}
+const rad=d=>d*Math.PI/180;
+function hav(a,b){const dl=rad(b.lat-a.lat),dn=rad(b.lon-a.lon),h=Math.sin(dl/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(dn/2)**2;return 12742*Math.asin(Math.sqrt(h))}
+const cen=g=>({lat:g.reduce((s,a)=>s+a.p.lat,0)/g.length,lon:g.reduce((s,a)=>s+a.p.lon,0)/g.length});
+function nnOrder(g,from){const r=[],l=g.slice();let cur=from;while(l.length){let bi=0,bd=1e9;l.forEach((a,i)=>{const d=hav(cur,a.p);if(d<bd){bd=d;bi=i}});const a=l.splice(bi,1)[0];r.push({a,d:bd});cur=a.p}return r}
+const GEO=(()=>{try{return JSON.parse(localStorage.getItem('geo')||'{}')}catch(e){return{}}})();
+async function geocode(q){const k=q.toLowerCase();if(GEO[k])return GEO[k];
+ const r=await TO(fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&accept-language=id&q='+encodeURIComponent(q)),15000),j=await r.json(),p=j[0]?{lat:+j[0].lat,lon:+j[0].lon}:null;
+ if(p){GEO[k]=p;try{localStorage.setItem('geo',JSON.stringify(GEO))}catch(e){}}return p}
+const sugItems=()=>S.items.filter(x=>!x.exp&&x.place&&['sight','food','shop','other'].includes(x.cat));
+let SUG=null;
+function suggestSheet(){const D=days();if(!D.length){tripSheet();return}
+ sheet('<h3>Saran urutan tempat</h3><div class="pl">Mengelompokkan tempat berlokasi ('+sugItems().length+' tempat) menurut jarak lurus, supaya yang berdekatan jadi satu hari. Ini bukan waktu tempuh, jadi macet tidak dihitung. Lokasi dicari lewat OpenStreetMap, jadi tulis nama tempat selengkap mungkin.</div><div class="two"><div class="f"><label>Mulai hari</label><select id="sg1">'+dayOpts(D,day)+'</select></div><div class="f"><label>Sebar ke</label><select id="sg2">'+D.map((d,i)=>'<option value="'+(i+1)+'"'+(i+1===Math.min(2,D.length)?' selected':'')+'>'+(i+1)+' hari</option>').join('')+'</select></div></div><div id="sgo" class="pl"></div><div class="acts"><button class="btn s" onclick="closeSh()">Tutup</button><button class="btn" id="sga" style="display:none" onclick="applySug()">Terapkan</button><button class="btn" id="sgb" onclick="runSug()">Buat saran</button></div>')}
+async function runSug(){const o=$('#sgo'),D=days(),st=+v('sg1'),its=sugItems(),ok=[],bad=[];
+ if(its.length<2){o.textContent='Isi minimal dua tempat yang ada lokasinya di tab Rencana.';return}
+ let n=0;try{for(const x of its){o.textContent='Mencari lokasi '+(++n)+' dari '+its.length+'...';const q=x.place+' '+(S.trip.dest||''),had=GEO[q.toLowerCase()],p=await geocode(q);if(!had)await new Promise(r=>setTimeout(r,1100));p?ok.push({x,p}):bad.push(x)}}
+ catch(e){o.textContent='Gagal mencari lokasi. Cek koneksi. Fitur ini hanya jalan di versi GitHub.';return}
+ if(ok.length<2){o.textContent='Lokasi belum ditemukan. Coba tulis nama tempat lebih lengkap.';return}
+ const k=Math.max(1,Math.min(+v('sg2'),ok.length,D.length-st)),hot=S.items.find(x=>x.cat==='stay'&&x.place);let base=null;
+ if(hot){try{base=await geocode(hot.place+' '+(S.trip.dest||''))}catch(e){}}
+ let C=[ok[0].p];while(C.length<k){let best=null,bd=-1;ok.forEach(a=>{const d=Math.min(...C.map(c=>hav(a.p,c)));if(d>bd){bd=d;best=a.p}});C.push(best)}
+ let G=[];for(let it=0;it<10;it++){G=C.map(()=>[]);ok.forEach(a=>{let bi=0,bd=1e9;C.forEach((c,i)=>{const d=hav(a.p,c);if(d<bd){bd=d;bi=i}});G[bi].push(a)});C=C.map((c,i)=>G[i].length?cen(G[i]):c)}
+ G=G.filter(g=>g.length);const ref=base||cen(ok);G.sort((a,b)=>hav(ref,cen(a))-hav(ref,cen(b)));
+ SUG=G.map((g,i)=>{const c=cen(g),far=g.reduce((m,a)=>hav(c,a.p)>hav(c,m.p)?a:m,g[0]);return{day:st+i,list:nnOrder(g,base||far.p)}});
+ let h='';SUG.forEach(g=>{h+='<div class="card" style="margin:8px 0"><b>Hari '+(g.day+1)+' · '+fd(D[g.day],{weekday:'short',day:'numeric',month:'short'})+'</b>'+g.list.map((r,i)=>'<div class="row" style="padding:5px 0"><span>'+(i+1)+'. '+esc(r.a.x.title)+'</span><span class="pl">'+(i?'± '+r.d.toFixed(1)+' km':(base?'± '+r.d.toFixed(1)+' km dari penginapan':''))+'</span></div>').join('')+'</div>'});
+ if(bad.length)h+='<div class="pl">Lokasi tidak ditemukan, tidak ikut disusun: '+bad.map(x=>esc(x.place)).join(', ')+'</div>';
+ o.innerHTML=h+'<div class="pl" style="margin-top:6px">Terapkan akan memindahkan tempat-tempat ini ke hari di atas dan menghapus jam yang sudah kamu isi.</div>';
+ $('#sga').style.display='';$('#sgb').textContent='Ulangi'}
+function applySug(){if(!SUG)return;SUG.forEach(g=>g.list.forEach((r,i)=>{const x=S.items.find(z=>z.id===r.a.x.id);if(x){x.day=g.day;x.day2=null;x.ord=i;x.time=''}}));day=SUG[0].day;save();closeSh();render()}
 const MQ=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
-function prevPlace(x){const l=S.items.filter(z=>z.day===x.day&&z.place).sort((p,q)=>(p.time||'99').localeCompare(q.time||'99'));const i=l.findIndex(z=>z.id===x.id);return i>0?l[i-1].place:''}
+function prevPlace(x){const l=S.items.filter(z=>z.day===x.day&&z.place).sort((p,q)=>(p.time||'99').localeCompare(q.time||'99')||((p.ord||0)-(q.ord||0)));const i=l.findIndex(z=>z.id===x.id);return i>0?l[i-1].place:''}
 function links(x){
  const where=[x.place||x.title,S.trip.dest].filter(Boolean).join(' ');let a=[];
  if(x.cat==='transport')a.push(['','',dd('✈️ Cari tiket',FLY)]);
@@ -315,7 +343,7 @@ function dp(id){S.pack=S.pack.filter(z=>z.id!==id);save();render()}
 function noteSheet(id){const n=S.notes.find(z=>z.id===id)||{label:'',text:''};sheet(`<h3>${id?'Ubah info':'Info baru'}</h3><div class="f"><label>Judul</label><input id="nl" value="${esc(n.label)}" placeholder="Contoh: Booking hotel"></div><div class="f"><label>Isi</label><textarea id="nx" rows="5" placeholder="Nomor booking, alamat, kontak, dan lain-lain">${esc(n.text)}</textarea></div><div class="acts">${id?`<button class="btn r" onclick="delNote('${id}')">Hapus</button>`:'<button class="btn s" onclick="closeSh()">Batal</button>'}<button class="btn" onclick="saveNote('${id||''}')">Simpan</button></div>`)}
 function saveNote(id){const l=v('nl').trim();if(!l){$('#nl').focus();return}const o={id:id||uid(),label:l,text:v('nx').trim()};if(id){S.notes[S.notes.findIndex(z=>z.id===id)]=o}else S.notes.push(o);save();closeSh();render()}
 function delNote(id){S.notes=S.notes.filter(z=>z.id!==id);save();closeSh();render()}
-function asText(){const D=days(),t=S.trip;let s=`${t.name||'Itinerary'} - ${t.dest}\n`;D.forEach((d,i)=>{s+=`\nHari ${i+1} (${fd(d,{weekday:'long',day:'numeric',month:'long'})})\n`;S.items.filter(x=>x.day===i).sort((a,b)=>(a.time||'99').localeCompare(b.time||'99')).forEach(x=>{s+=`- ${x.time||'--:--'} ${x.title}${x.place?' @ '+x.place:''}${+x.cost?' ('+rp(x.cost)+')':''}\n`})});return s+'\nLink edit bareng: '+location.href}
+function asText(){const D=days(),t=S.trip;let s=`${t.name||'Itinerary'} - ${t.dest}\n`;D.forEach((d,i)=>{s+=`\nHari ${i+1} (${fd(d,{weekday:'long',day:'numeric',month:'long'})})\n`;S.items.filter(x=>x.day===i).sort((a,b)=>(a.time||'99').localeCompare(b.time||'99')||((a.ord||0)-(b.ord||0))).forEach(x=>{s+=`- ${x.time||'--:--'} ${x.title}${x.place?' @ '+x.place:''}${+x.cost?' ('+rp(x.cost)+')':''}\n`})});return s+'\nLink edit bareng: '+location.href}
 function shareSheet(){const s=asText();sheet(`<h3>Bagikan itinerary</h3><textarea id="sx" rows="10" readonly>${esc(s)}</textarea><div class="acts"><button class="btn s" onclick="closeSh()">Tutup</button><button class="btn" onclick="doShare()">Bagikan atau salin</button></div>`)}
 function doShare(){const s=asText();try{if(navigator.share){navigator.share({text:s});return}}catch(e){}$('#sx').select();try{document.execCommand('copy')}catch(e){}}
 load();render();
